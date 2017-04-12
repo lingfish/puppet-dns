@@ -15,19 +15,17 @@ zone "<%= @zone %>" {
 <% end -%>
 <% if @zone_type == 'slave' or @zone_type == 'stub' -%>
 <%- if @slave_masters.is_a?(Array) -%>
-    masters { <%= @slave_masters.join(";") %>;};
+    masters { <%= @slave_masters.join(";") %>; };
 <%- else -%>
-    masters { <%= @slave_masters %>;};
+    masters { <%= @slave_masters %>; };
 <%- end -%>
-<% elsif @zone_type == 'master' -%>
-    <%- if @allow_transfer.is_a?(Array) and @allow_transfer.size != 0 -%>
-        allow-transfer {
-        <%- @allow_transfer.each do |ip| -%>
-            <%= ip %>;
-        <%- end -%>
-        };
+<%- if @allow_transfer.is_a?(Array) and @allow_transfer.size != 0 -%>
+    allow-transfer {
+    <%- @allow_transfer.each do |ip| -%>
+        <%= ip %>;
     <%- end -%>
-<% end -%>
+    };
+<%- end -%>
 <% if !@allow_forwarder.empty? and ( @zone_type == 'master' or  @zone_type == 'forward') -%>
     forward <%= @forward_policy %>;
     forwarders {
@@ -37,11 +35,11 @@ zone "<%= @zone %>" {
     };
 <% end -%>
     <%- if @allow_query.size != 0 %>
-        allow-query {
+    allow-query {
         <%- @allow_query.each do |ip| -%>
-            <%= ip %>;
+        <%= ip %>;
         <%- end -%>
-        };
+    };
     <%- end -%>
 <%- if @allow_update.size != 0 %>
     allow-update {
